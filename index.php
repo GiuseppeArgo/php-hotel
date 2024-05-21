@@ -36,6 +36,12 @@
             'distance_to_center' => 50
         ],
     ];
+
+    if (isset($_GET['parking'])) {
+        $hotels = array_filter($hotels, function($hotel) {
+            return $hotel['parking'] === true;
+        });
+    }
 ?>
 
 <!DOCTYPE html>
@@ -63,16 +69,23 @@
             <tbody>
                 <?php foreach ($hotels as $hotel) {
                         echo "<tr>";
-                        echo "<td>" . ($hotel['name']) . "</td>";
-                        echo "<td>" . ($hotel['description']) . "</td>";
-                        echo "<td>" . ($hotel['parking'] ? 'Si' : 'No') . "</td>";
-                        echo "<td>" . ($hotel['vote']) . "</td>";
-                        echo "<td>" . ($hotel['distance_to_center']) . "</td>";
+                            echo "<td>" . ($hotel['name']) . "</td>";
+                            echo "<td>" . ($hotel['description']) . "</td>";
+                            echo "<td>" . ($hotel['parking'] ? '&check;' : '&cross;') . "</td>";
+                            echo "<td>" . ($hotel['vote']) . "</td>";
+                            echo "<td>" . ($hotel['distance_to_center']) . "</td>";
                         echo "</tr>";
                     }
                 ?>
             </tbody>
         </table>
+        <form method="GET" action="index.php" class="mt-5">
+            <div>
+                <input type="checkbox" name="parking" id="parking">
+                <label for="parking">Con parcheggio</label>
+            </div>
+            <button type="submit" class="btn btn-outline-secondary mt-2">Cerca</button>
+        </form>
     </div>
 </body>
 </html>
